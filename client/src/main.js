@@ -114,5 +114,5 @@ function deleteStudent(event) {
       loadStudents();
       clearInputs();
     })
-    .catch((error) => console.error("Помилка СТУДЕНТІВ!", error));
+    .catch((error) => console.error("Помилка СТУДЕНТІВ!!", error));
 }
