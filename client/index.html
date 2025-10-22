@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD Students</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Список студентів</h1>
+      <button id="get-students-btn">Отримати студентів</button>
+      <table id="students-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Ім'я</th>
+            <th>Вік</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody class="students-tbody">
+        </tbody>
+      </table>
+      <h2>Додати нового студента</h2>
+      <form id="add-student-form">
+        <label>Ім'я: <input type="text" id="name" required /></label>
+        <label>Вік: <input type="number" id="age" required /></label>
+        <label>Email: <input type="email" id="email" required /></label>
+        <button class="add-button">Додати студента</button>
+      </form>
+      <h2>Оновити студента</h2>
+      <form id="update-students-dorm">
+        <label>Id: <input type="text" id="id-u" required /></label>
+        <label>Ім'я: <input type="text" id="name-u" required /></label>
+        <label>Вік: <input type="number" id="age-u" required /></label>
+        <label>Email: <input type="email" id="email-u" required /></label>
+        <button class="update-button">Оновити студента</button>
+      </form>
+      <h2>Видалити студента</h2>
+      <form id="delete-student-form">
+        <label>Id: <input type="text" id="id-d" required /></label>
+        <button class="delete-button">Видалити студента</button>
+      </form>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
