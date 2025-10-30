@@ -29,12 +29,6 @@
       "name": "Mykola Bondarenko",
       "age": 15,
       "email": "mykola.bondarenko@example.com"
-    },
-    {
-      "id": "3d98",
-      "name": "Mykyta",
-      "age": "98",
-      "email": "nikitashu59@gmail.com"
     }
   ]
 }

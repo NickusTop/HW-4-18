@@ -14,7 +14,6 @@ const updatebtn = document.querySelector(".update-button");
 const idInputD = document.getElementById("id-d");
 const deletebtn = document.querySelector(".delete-button");
 
-
 loadbtn.addEventListener("click", loadStudents);
 addbtn.addEventListener("click", addStudent);
 updatebtn.addEventListener("click", updateStudent);
@@ -33,26 +32,29 @@ function clearInputs() {
   idInputD.value = "";
 }
 
-function loadStudents() {
-  fetch("http://localhost:3000/students")
-    .then((response) => response.json())
-    .then((data) => {
-      tableBody.innerHTML = "";
-      data.forEach((student) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
+async function loadStudents() {
+  try {
+    const response = await fetch("http://localhost:3000/students");
+    const data = await response.json();
+
+    tableBody.innerHTML = "";
+
+    data.forEach((student) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
         <td>${student.id}</td>
         <td>${student.name}</td>
         <td>${student.age}</td> 
         <td>${student.email}</td>
-    `;
-        tableBody.appendChild(row);
-      });
-    })
-    .catch((error) => console.error("Помилка СТУДЕНТІВ!:", error));
+      `;
+      tableBody.appendChild(row);
+    });
+  } catch (error) {
+    console.error("Помилка СТУДЕНТІВ!:", error);
+  }
 }
 
-function addStudent(event) {
+async function addStudent(event) {
   event.preventDefault();
   const student = {
     name: nameInput.value,
@@ -60,23 +62,24 @@ function addStudent(event) {
     email: emailInput.value,
   };
 
-  fetch("http://localhost:3000/students", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(student),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      loadStudents();
-      clearInputs();
-    })
-    .catch((error) => console.error("Помилка СТУДЕНТІВ!", error));
+  try {
+    const response = await fetch("http://localhost:3000/students", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(student),
+    });
+    const data = await response.json();
+    console.log(data);
+    loadStudents();
+    clearInputs();
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-function updateStudent(event) {
+async function updateStudent(event) {
   event.preventDefault();
   const studentId = idInputU.value;
   const updatedStudent = {};
@@ -85,34 +88,39 @@ function updateStudent(event) {
   if (ageInputU.value) updatedStudent.age = ageInputU.value;
   if (emailInputU.value) updatedStudent.email = emailInputU.value;
 
-  fetch(`http://localhost:3000/students/${studentId}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(updatedStudent),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      loadStudents();
-      clearInputs();
-    })
-    .catch((error) => console.error("Помилка СТУДЕНТІВ!", error));
+  try {
+    const response = await fetch(
+      `http://localhost:3000/students/${studentId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedStudent),
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    loadStudents();
+    clearInputs();
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-function deleteStudent(event) {
+async function deleteStudent(event) {
   event.preventDefault();
   const studentId = idInputD.value;
 
-  fetch(`http://localhost:3000/students/${studentId}`, {
+  try {
+    const response = await  fetch(`http://localhost:3000/students/${studentId}`, {
     method: "DELETE",
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      loadStudents();
-      clearInputs();
-    })
-    .catch((error) => console.error("Помилка СТУДЕНТІВ!!", error));
+    const data = await response.json();
+    console.log(data);
+    loadStudents();
+    clearInputs();
+  } catch (error) {
+    console.error(error);
+  }
 }
