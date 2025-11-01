@@ -36,19 +36,19 @@ async function loadStudents() {
   try {
     const response = await fetch("http://localhost:3000/students");
     const data = await response.json();
-
-    tableBody.innerHTML = "";
-
-    data.forEach((student) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${student.id}</td>
-        <td>${student.name}</td>
-        <td>${student.age}</td> 
-        <td>${student.email}</td>
-      `;
-      tableBody.appendChild(row);
-    });
+    const markup = data
+      .map(
+        (student) => `
+        <tr>
+          <td>${student.id}</td>
+          <td>${student.name}</td>
+          <td>${student.age}</td>
+          <td>${student.email}</td>
+        </tr>
+      `
+      )
+      .join("");
+    tableBody.innerHTML = markup;
   } catch (error) {
     console.error("Помилка СТУДЕНТІВ!:", error);
   }
@@ -113,9 +113,12 @@ async function deleteStudent(event) {
   const studentId = idInputD.value;
 
   try {
-    const response = await  fetch(`http://localhost:3000/students/${studentId}`, {
-    method: "DELETE",
-  })
+    const response = await fetch(
+      `http://localhost:3000/students/${studentId}`,
+      {
+        method: "DELETE",
+      }
+    );
     const data = await response.json();
     console.log(data);
     loadStudents();
